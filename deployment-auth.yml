@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app
+  namespace: muneeb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+        - name: backend-container
+          image: muneebshoukat/backend-node-login-app-prot4000
+          ports:
+            - containerPort: 4000
+          env:
+            - name: POSTGRES_USERNAME
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "pCH3e1PwMI4B"
+            - name: POSTGRES_HOST
+              value: "interns.cycaxqbptvi1.us-west-2.rds.amazonaws.com"
+            - name: POSTGRES_DATABASE
+              value: "postgres"
+            - name: POSTGRES_PORT
+              value: "5432"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: muneeb
+spec:
+  selector:
+    app: backend-app
+  ports:
+  - port: 4000
+    targetPort: 4000
+  type: ClusterIP

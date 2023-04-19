@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-job
+  namespace: muneeb
+spec:
+  template:
+    metadata:
+      name: my-pod
+    spec:
+      containers:
+      - name: backend-container
+        image: muneebshoukat/backend-react-p
+        command: ["/bin/sh"]
+        args: ["-c", "./entrypoint.sh"]
+      restartPolicy: Never
+  backoffLimit: 4
